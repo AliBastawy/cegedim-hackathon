@@ -33,33 +33,6 @@ const suggestionGroups: SuggestionGroup[] = [
       { icon: 'tabler-users', title: 'User List', url: { name: 'apps-user-list' } },
     ],
   },
-  {
-    title: 'Apps & Pages',
-    content: [
-      { icon: 'tabler-calendar', title: 'Calendar', url: { name: 'apps-calendar' } },
-      { icon: 'tabler-file-plus', title: 'Invoice Add', url: { name: 'apps-invoice-add' } },
-      { icon: 'tabler-currency-dollar', title: 'Pricing', url: { name: 'pages-pricing' } },
-      { icon: 'tabler-user', title: 'Account Settings', url: { name: 'pages-account-settings-tab', params: { tab: 'account' } } },
-    ],
-  },
-  {
-    title: 'User Interface',
-    content: [
-      { icon: 'tabler-letter-a', title: 'Typography', url: { name: 'pages-typography' } },
-      { icon: 'tabler-square', title: 'Tabs', url: { name: 'components-tabs' } },
-      { icon: 'tabler-hand-click', title: 'Buttons', url: { name: 'components-button' } },
-      { icon: 'tabler-keyboard', title: 'Statistics', url: { name: 'pages-cards-card-statistics' } },
-    ],
-  },
-  {
-    title: 'Popular Searches',
-    content: [
-      { icon: 'tabler-list', title: 'Select', url: { name: 'forms-select' } },
-      { icon: 'tabler-space', title: 'Combobox', url: { name: 'forms-combobox' } },
-      { icon: 'tabler-calendar', title: 'Date & Time Picker', url: { name: 'forms-date-time-picker' } },
-      { icon: 'tabler-hexagon', title: 'Rating', url: { name: 'forms-rating' } },
-    ],
-  },
 ]
 
 // 👉 No Data suggestion
