@@ -97,7 +97,7 @@ watchEffect(() => {
 })
 
 // 👉 redirect the selected page
-const redirectToSuggestedOrSearchedPage = (selected: Suggestion) => {
+function redirectToSuggestedOrSearchedPage(selected: Suggestion) {
   router.push(selected.url)
 
   isAppSearchBarVisible.value = false

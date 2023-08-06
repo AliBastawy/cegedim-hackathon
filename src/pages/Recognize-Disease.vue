@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { VForm } from 'vuetify/components'
-import type { DonateMedicineParam } from '@/views/apps/donate-medicine/types'
+import type { RecognizeDiabiticsParam } from '@/views/apps/recognize-disease/types'
 import axios from '@axios'
 import { betweenValidator, decimalValidator, requiredValidator } from '@validators'
 
 const refVForm = ref<VForm>()
 
-const age = ref('')
+const age = ref()
 
 // const ages = ref([...Array(100).keys()].map(i => i + 1))
 
@@ -43,13 +43,21 @@ const blood = ref('')
 
 const temperature = ref('')
 
+const yesOrNO = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }]
+
 const smoking = ref()
-const smokingOptions = ref([{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }])
+const smokingOptions = ref(yesOrNO)
 
 const bmi = ref('')
 
+const cholesterol = ref('')
+const bloodPressure = ref('')
+const heartRate = ref('')
+
 const dataLoading = ref(false)
 const submitSuccessful = ref(false)
+
+const recognition = ref('')
 
 // Form Errors
 const errors = ref<Record<string, string | undefined>>({
@@ -61,19 +69,20 @@ const errors = ref<Record<string, string | undefined>>({
   temperature: undefined,
   smoking: undefined,
   bmi: undefined,
+  cholesterol: undefined,
+  bloodPressure: undefined,
+  heartRate: undefined,
 })
 
 // Error Message Alert For Network Errors
 const errorMessage = ref('')
 
-const router = useRouter()
-
 function calculateBMI() {
   return parseFloat(parseFloat(weight.value) / (parseFloat(height.value).toFixed(1) ** 2)).toFixed(2)
 }
 
-function donateMedicine() {
-  const data: DonateMedicineParam = {
+function recognizeDiabytics() {
+  const data: RecognizeDiabiticsParam = {
     age: age.value,
     gender: gender.value,
     height: height.value,
@@ -81,19 +90,18 @@ function donateMedicine() {
     blood: blood.value,
     temperature: temperature.value,
     smoking: smoking.value,
+    cholesterol: cholesterol.value,
+    bloodPressure: bloodPressure.value,
+    heartRate: heartRate.value,
+    bmi: bmi.value === calculateBMI() ? bmi.value : calculateBMI(),
   }
 
-  if (bmi.value === calculateBMI())
-    data.bmi = bmi.value
-  else
-    data.bmi = calculateBMI()
-
-  axios.post('http://localhost:8000/recongize-disease', data).then(result => {
+  axios.post('http://localhost:8000/recongize-diabetics', data).then(result => {
     console.log('Result => ', result)
     dataLoading.value = false
     submitSuccessful.value = true
 
-    // router.push({ name: 'MyMedicines' })
+    recognition.value = result.data.message
   }).catch(error => {
     dataLoading.value = false
     errorMessage.value = error.message
@@ -107,7 +115,7 @@ function submitData() {
       if (isValid) {
         dataLoading.value = true
         errorMessage.value = ''
-        donateMedicine()
+        recognizeDiabytics()
       }
     })
 }
@@ -119,10 +127,9 @@ function submitData() {
     align="center"
     justify="center"
   >
-    <VCol cols="12">
+    <VCol cols="6">
       <VCard
         class="pa-6"
-        :max-width="900"
       >
         <VSnackbar
           v-model="submitSuccessful"
@@ -219,6 +226,36 @@ function submitData() {
               />
             </VCol>
 
+            <!-- User Height -->
+            <VCol cols="12">
+              <VTextField
+                v-model="cholesterol"
+                :rules="[requiredValidator, decimalValidator]"
+                label="Cholesterol"
+                :error-messages="errors.cholesterol"
+              />
+            </VCol>
+
+            <!-- User Height -->
+            <VCol cols="12">
+              <VTextField
+                v-model="heartRate"
+                :rules="[requiredValidator, decimalValidator]"
+                label="Heart Rate"
+                :error-messages="errors.heartRate"
+              />
+            </VCol>
+
+            <!-- User Height -->
+            <VCol cols="12">
+              <VTextField
+                v-model="bloodPressure"
+                :rules="[requiredValidator, decimalValidator]"
+                label="Blood Pressure"
+                :error-messages="errors.bloodPressure"
+              />
+            </VCol>
+
             <VCol
               v-if="errorMessage"
               cols="12"
@@ -232,7 +269,8 @@ function submitData() {
               />
             </VCol>
 
-            <VCol cols="6">
+            <VCol cols="4" />
+            <VCol cols="4">
               <VBtn
                 :loading="dataLoading"
                 type="submit"
@@ -243,6 +281,18 @@ function submitData() {
             </VCol>
           </VRow>
         </VForm>
+      </VCard>
+    </VCol>
+    <VCol
+      cols="5"
+      class="ma-2"
+    >
+      <VCard
+        class="pa-6"
+      >
+        <VCardText>
+          Recognition: {{ recognition }}
+        </VCardText>
       </VCard>
     </VCol>
   </VRow>

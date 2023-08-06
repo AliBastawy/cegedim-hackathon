@@ -8,5 +8,10 @@ export const useDonatedMedicineStore = defineStore('DonatedMedicineStore', {
     fetchDonatedMedicines(params: DonatedMedicineParam) {
       return axios.get('http://localhost:8000/my-donated-medicines', { params })
     },
+
+    // 👉 Fetch single medicine
+    fetchDonatedMedicine(id: number) {
+      return axios.get(`http://localhost:8000/my-donated-medicines/${id}`)
+    },
   },
 })

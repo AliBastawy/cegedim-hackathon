@@ -149,9 +149,11 @@ function medicineAcceptanceColor(medicine) {
               />
             </VCol>
             <VCol cols="6">
-              <p>{{ medicine.name }}</p>
+              <RouterLink :to="{ name: 'my-medicines-id', params: { id: medicine.id } }">
+                {{ medicine.name }}
+              </RouterLink>
               <p>
-                accepted:
+                Status:
                 <VChip
                   class="ma-2"
                   :color="medicineAcceptanceColor(medicine)"

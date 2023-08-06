@@ -135,9 +135,15 @@ const showAlternativeMedicines = computed(() => {
 
         <VSpacer />
 
-        <VCol cols="3">
+        <VCol cols="4">
           <!-- 👉 Search  -->
           <div class="medicine-list-filter d-flex align-center">
+            <VBtn
+              @click="fetchMedicines"
+            >
+              <VIcon icon="mdi-refresh" />
+              Reload Data
+            </VBtn>
             <VBtn
               icon="tabler-search"
               class="ma-2"
@@ -178,6 +184,14 @@ const showAlternativeMedicines = computed(() => {
             <VCol cols="6">
               <p>{{ medicine.name }}</p>
               <p>{{ medicine.price }}EGP</p>
+            </VCol>
+            <VCol
+              cols="12"
+              class="text-center"
+            >
+              <VBtn @click="">
+                Order
+              </VBtn>
             </VCol>
           </VRow>
         </VCard>
