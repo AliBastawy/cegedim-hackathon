@@ -96,7 +96,7 @@ function recognizeDiabytics() {
     bmi: bmi.value === calculateBMI() ? bmi.value : calculateBMI(),
   }
 
-  axios.post('http://localhost:8000/recongize-diabetics', data).then(result => {
+  axios.post('http://localhost:5000/recongize-diabetics', data).then(result => {
     console.log('Result => ', result)
     dataLoading.value = false
     submitSuccessful.value = true

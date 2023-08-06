@@ -104,7 +104,7 @@ function register() {
     data.phone = userPhone.value
   }
 
-  axios.post('http://localhost:8000/auth/register', data)
+  axios.post('http://localhost:5000/auth/register', data)
     .then(r => {
       console.log('R => ', r)
 

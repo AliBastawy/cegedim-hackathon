@@ -84,21 +84,21 @@ const router = useRouter()
 
 function donateMedicine() {
   const data: DonateMedicineParam = {
-    username: username.value,
+    name: username.value,
     email: email.value,
-    userLocation: userLocation.value,
-    userPhone: userPhone.value,
+    location: userLocation.value,
+    phone: userPhone.value,
     medicineName: medicineName.value,
-    medicinePic: medicinePic.value[0],
-    medicineExpirePic: medicineExpirePic.value[0],
-    medicinePrescription: medicinePrescription.value[0],
+    originalprice: medicinePic.value[0],
+    expirydate: medicineExpirePic.value[0],
+    prescription: medicinePrescription.value[0],
   }
 
   if (sellMedicine.value) {
     data.medicineOriginalPrice = medicineOriginalPrice.value
     data.medicineUserPrice = medicineUserPrice.value
   }
-  axios.post('http://localhost:8000/donate-medicine', data, {
+  axios.post('http://localhost:5000/donate-medicine', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

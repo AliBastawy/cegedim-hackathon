@@ -16,6 +16,8 @@ const naturalMedicines = ref<MedicineParam[]>([])
 const selectedRows = ref<string[]>([])
 
 function fetchMedicines() {
+  dataLoading.value = true
+
   medicinesListStore.fetchMedicines(
     {
       q: searchQuery.value,
@@ -34,6 +36,7 @@ function fetchMedicines() {
 
     // totalMedicines.value = data.paginatorInfo.totalMedicines
     totalMedicines.value = medicines.value?.length
+    dataLoading.value = false
   }).catch(error => {
     console.log(error)
   })
@@ -61,6 +64,8 @@ function fetchNaturalAlternativeMedicines() {
     console.log(error)
   })
 }
+
+const dataLoading = ref(false)
 
 // 👉 Fetch Invoices
 onMounted(() => {
@@ -117,6 +122,7 @@ const showAlternativeMedicines = computed(() => {
 <template>
   <VCard
     id="medicines-list"
+    class="text-center"
   >
     <VCardText>
       <VRow>
@@ -161,8 +167,16 @@ const showAlternativeMedicines = computed(() => {
 
     <VDivider />
 
+    <VProgressCircular
+      v-if="dataLoading"
+      indeterminate
+      color="primary"
+    />
     <!-- SECTION Table -->
-    <VRow class="pa-3">
+    <VRow
+      v-else
+      class="pa-3"
+    >
       <VCol
         v-for="(medicine, index) in filteredMedicines"
         :key="`${medicine.id}-${index}`"

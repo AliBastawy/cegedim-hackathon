@@ -43,7 +43,7 @@ const password = ref('admin')
 const rememberMe = ref(false)
 
 function login() {
-  axios.post<LoginResponse>('http://localhost:8000/auth/login', { email: email.value, password: password.value })
+  axios.post<LoginResponse>('http://localhost:5000/auth/login', { email: email.value, password: password.value })
     .then(r => {
       const { accessToken, userData } = r.data
 
